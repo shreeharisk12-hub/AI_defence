@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Detection Report - Military Command Dashboard</title>
+    <meta name="description" content="AI analysis output and telemetry from the latest intel scans.">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Specific layout for this single page approach */
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .single-column {
+            width: 100%;
+            max-width: 900px;
+            height: calc(100vh - (var(--spacing) * 2));
+            display: flex;
+            flex-direction: column;
+        }
+
+        .single-column .panel {
+            flex: 1;
+        }
+
+        .report-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .report-data-group {
+            border: 1px solid rgba(0, 169, 157, 0.3);
+            background: rgba(0, 169, 157, 0.05);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .report-data-group .title {
+            font-family: 'Rajdhani', sans-serif;
+            color: var(--text-heading);
+            font-size: 16px;
+            letter-spacing: 2px;
+            border-bottom: 1px solid rgba(0, 169, 157, 0.3);
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+
+        .value-red {
+            color: var(--alert-red);
+            font-weight: bold;
+        }
+
+        .value-green {
+            color: var(--ready-green);
+            font-weight: bold;
+        }
+
+        .lorem-placeholder {
+            font-size: 14px;
+            line-height: 1.8;
+            color: var(--text-muted);
+            margin-top: 40px;
+            border-top: 1px dashed var(--border-color);
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg-image"></div>
+    <div class="bg-grid"></div>
+
+    <div class="single-column">
+        <div class="panel">
+            <div style="display: flex; justify-content: space-between; align-items: baseline;">
+                <div class="heading" style="font-size: 28px;">AI DETECTION REPORT</div>
+                <button onclick="window.location.href='/'"
+                    style="background: none; border: 1px solid var(--border-color); color: var(--text-heading); font-family: 'Share Tech Mono'; padding: 8px 16px; cursor: pointer; text-transform: uppercase; transition: all 0.2s ease;">&lt;
+                    RETURN TO COMMAND</button>
+            </div>
+
+            <p style="margin-bottom: 30px; border-left: 2px solid var(--border-color); padding-left: 12px;">SYSTEM
+                GENERATED REPORT FROM LATEST INTEL UPLOAD. ALL METRICS AND CLASSIFICATIONS SOURCED FROM NEURAL NET V.4.1
+                OMEGA.</p>
+
+            <div class="report-section" id="ai-report-container">
+                <!-- Structure ready for detection results -->
+                <div class="left-stats">
+                    <div class="report-data-group">
+                        <div class="title">TARGET CLASSIFICATION</div>
+                        <ul class="data-list">
+                            <li><span>PRIMARY OBJECT</span><span id="data-object">--</span></li>
+                            <li><span>CONFIDENCE SCORE</span><span id="data-confidence" class="value-green">--</span>
+                            </li>
+                            <li><span>THREAT LEVEL</span><span id="data-threat" class="value-red">--</span></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="right-stats">
+                    <div class="report-data-group">
+                        <div class="title">TELEMETRY DATA</div>
+                        <ul class="data-list">
+                            <li><span>COORDINATES</span><span id="data-location">--</span></li>
+                            <li><span>ELEVATION</span><span>824m MSL</span></li>
+                            <li><span>MOTION STATE</span><span>STATIONARY</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lorem-placeholder">
+                <div class="heading" style="font-size: 16px; color: var(--text-muted);">TACTICAL SUMMARY</div>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in odio ex. Vivamus sagittis efficitur
+                dui, ac viverra ligula aliquet eget. Phasellus et tempor est. Fusce non elit et lacus luctus facilisis
+                eu sed orci. Nam accumsan vehicula tortor, non facilisis ante imperdiet sit amet. Proin mattis elementum
+                sapien, vitae pharetra est vehicula condimentum. Duis et ipsum eros. Integer euismod metus et tristique
+                dictum. Donec sodales urna ac nunc eleifend, a faucibus elit pulvinar. Mauris scelerisque est
+                scelerisque purus tincidunt, sit amet efficitur augue iaculis.
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Fetch AI data to populate this page automatically if the user wants
+        fetch('/api/ai')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('data-object').textContent = data.object.toUpperCase();
+                document.getElementById('data-confidence').textContent = data.confidence;
+                document.getElementById('data-threat').textContent = data.threat.toUpperCase();
+                document.getElementById('data-location').textContent = data.location.toUpperCase();
+            })
+            .catch(error => {
+                console.error('Error fetching AI data:', error);
+            });
+    </script>
+</body>
+
+</html>

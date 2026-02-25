@@ -1,0 +1,694 @@
+/* ========================================
+   MILITARY COMMAND DASHBOARD — DESERT THEME
+   ======================================== */
+
+:root {
+    --bg-start: #1B140F;
+    --bg-mid: #2A2018;
+    --bg-end: #0F1A16;
+    --border-color: #00A99D;
+    --glow-color: rgba(0, 169, 157, 0.12);
+    --text-muted: #8A7D6B;
+    --text-heading: #B8E8E0;
+    --alert-red: #FF3B2F;
+    --ready-green: #39FF6A;
+    --panel-bg: rgba(27, 20, 15, 0.55);
+
+    /* Military Camouflage Colors */
+    --sand: #C2A36B;
+    --olive: #4B5320;
+    --brown: #3A2E1F;
+
+    --spacing: 24px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    margin: 0;
+    padding: var(--spacing);
+    width: 100vw;
+    height: 100vh;
+    background: #1B140F;
+    color: var(--text-muted);
+    font-family: 'Share Tech Mono', monospace;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: 320px 1fr 340px;
+    gap: var(--spacing);
+}
+
+.bg-image {
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
+        radial-gradient(ellipse at center, rgba(194, 163, 107, 0.1) 0%, rgba(75, 83, 32, 0.2) 50%, rgba(58, 46, 31, 0.4) 100%),
+        url("https://images.unsplash.com/photo-1543881515-3df53f3e2e0e?q=80&w=2000&auto=format&fit=crop");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    filter: blur(2px) contrast(1.1);
+    z-index: -2;
+    pointer-events: none;
+}
+
+.bg-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background:
+        linear-gradient(rgba(0, 169, 157, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 169, 157, 0.03) 1px, transparent 1px);
+    background-size: 30px 30px;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ========================================
+   COLUMNS & PANELS
+   ======================================== */
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing);
+    height: calc(100vh - (var(--spacing) * 2));
+}
+
+.panel {
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: inset 0 0 30px var(--glow-color);
+    padding: 24px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.heading {
+    font-family: 'Rajdhani', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    color: var(--text-heading);
+    margin-bottom: 20px;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.2;
+}
+
+.red-text {
+    color: var(--alert-red);
+}
+
+.green-text {
+    color: var(--ready-green);
+}
+
+p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-muted);
+}
+
+/* ========================================
+   LEFT COLUMN — CONFIDENCE SCORES & THREAT FEED
+   ======================================== */
+
+.left-col .panel-1 {
+    flex: 0.8;
+}
+
+.left-col .panel-2 {
+    flex: 1.2;
+}
+
+.confidence-section {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 8px;
+}
+
+.confidence-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.confidence-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+}
+
+.confidence-value {
+    color: var(--text-heading);
+    font-weight: 600;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 15px;
+}
+
+.confidence-track {
+    width: 100%;
+    height: 8px;
+    background: rgba(0, 169, 157, 0.08);
+    border: 1px solid rgba(0, 169, 157, 0.25);
+    position: relative;
+    overflow: hidden;
+}
+
+.confidence-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #00A99D, #39FF6A);
+    box-shadow: 0 0 8px rgba(0, 169, 157, 0.4);
+    transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+}
+
+.confidence-fill.detected {
+    box-shadow: 0 0 12px rgba(57, 255, 106, 0.6), 0 0 24px rgba(0, 169, 157, 0.3);
+}
+
+.confidence-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 3px;
+    height: 100%;
+    background: #fff;
+    box-shadow: 0 0 6px #39FF6A;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.confidence-fill.detected::after {
+    opacity: 1;
+    animation: pulse-tip 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-tip {
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* --- Rolling Threat Feed --- */
+
+.threat-feed {
+    flex: 1;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(0, 169, 157, 0.15);
+    padding: 12px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--text-heading);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.threat-feed::-webkit-scrollbar {
+    width: 4px;
+}
+
+.threat-feed::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.threat-feed::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+}
+
+.threat-entry {
+    opacity: 0.75;
+    padding: 2px 0;
+    border-bottom: 1px solid rgba(0, 169, 157, 0.06);
+}
+
+.threat-entry.warning {
+    color: #FFB347;
+    opacity: 0.9;
+}
+
+.threat-entry.alert {
+    color: var(--alert-red);
+    opacity: 1;
+    font-weight: bold;
+    text-shadow: 0 0 6px rgba(255, 59, 47, 0.4);
+}
+
+/* ========================================
+   DATA LIST (used in right column)
+   ======================================== */
+
+.data-list {
+    list-style: none;
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 10px;
+}
+
+.data-list li {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 168, 154, 0.2);
+    padding-bottom: 6px;
+}
+
+.data-list span:last-child {
+    color: #C5D8D0;
+}
+
+.cloud-svg {
+    width: 140px;
+    height: 140px;
+    fill: none;
+    stroke: var(--text-heading);
+    stroke-width: 1.5;
+    margin-bottom: 25px;
+    opacity: 0.9;
+}
+
+.ready-text {
+    font-size: 26px;
+    letter-spacing: 6px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+}
+
+/* ========================================
+   CENTER COLUMN
+   ======================================== */
+
+.center-col .panel-1 {
+    height: 220px;
+    padding: 0;
+}
+
+.map-placeholder {
+    width: 100%;
+    height: 100%;
+    background:
+        radial-gradient(circle at center, rgba(0, 168, 154, 0.08) 0%, rgba(27, 20, 15, 0.8) 70%),
+        linear-gradient(rgba(27, 20, 15, 0.7), rgba(27, 20, 15, 0.7)),
+        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0, 168, 154, 0.04) 11px);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.map-top-left {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    background: rgba(27, 20, 15, 0.8);
+    padding: 4px 8px;
+    border: 1px solid var(--border-color);
+    margin: 0;
+    font-size: 14px;
+}
+
+.map-crosshair {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 1px dashed rgba(184, 232, 224, 0.4);
+    border-radius: 50%;
+    transition: opacity 0.3s;
+}
+
+.map-crosshair::before,
+.map-crosshair::after {
+    content: '';
+    position: absolute;
+    background: rgba(184, 232, 224, 0.4);
+}
+
+.map-crosshair::before {
+    top: 39px;
+    left: -20px;
+    right: -20px;
+    height: 1px;
+}
+
+.map-crosshair::after {
+    left: 39px;
+    top: -20px;
+    bottom: -20px;
+    width: 1px;
+}
+
+/* --- SAT-COM Image Preview --- */
+
+.satcom-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 2;
+    display: none;
+    padding: 8px;
+}
+
+.satcom-image.visible {
+    display: block;
+}
+
+/* --- Scanning Overlay --- */
+
+.scanning-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+}
+
+.scanning-overlay.active {
+    display: flex;
+    border: 2px solid var(--border-color);
+    animation: pulse-glow 1.2s ease-in-out infinite;
+}
+
+.scanning-overlay.complete {
+    display: flex;
+    border: 2px solid var(--ready-green);
+    box-shadow: 0 0 20px rgba(57, 255, 106, 0.3), inset 0 0 30px rgba(57, 255, 106, 0.08);
+}
+
+.scan-line {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+    box-shadow: 0 0 12px var(--border-color);
+    opacity: 0;
+}
+
+.scanning-overlay.active .scan-line {
+    opacity: 1;
+    animation: scanline 2s linear infinite;
+}
+
+.scan-text {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 6px;
+    color: var(--text-heading);
+    text-shadow: 0 0 12px rgba(0, 169, 157, 0.6);
+    background: rgba(0, 0, 0, 0.6);
+    padding: 6px 16px;
+    border: 1px solid var(--border-color);
+}
+
+.scanning-overlay.complete .scan-text {
+    color: var(--ready-green);
+    border-color: var(--ready-green);
+    text-shadow: 0 0 12px rgba(57, 255, 106, 0.6);
+}
+
+@keyframes pulse-glow {
+
+    0%,
+    100% {
+        border-color: var(--border-color);
+        box-shadow: 0 0 10px rgba(0, 169, 157, 0.2), inset 0 0 20px rgba(0, 169, 157, 0.05);
+    }
+
+    50% {
+        border-color: var(--text-heading);
+        box-shadow: 0 0 25px rgba(0, 169, 157, 0.5), inset 0 0 40px rgba(0, 169, 157, 0.1);
+    }
+}
+
+@keyframes scanline {
+    0% {
+        top: 0;
+    }
+
+    100% {
+        top: 100%;
+    }
+}
+
+/* --- Center Panel 2: Tank Wireframe & YOLO Result --- */
+
+.center-col .panel-2 {
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+.tank-wireframe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.tank-svg {
+    width: 300px;
+    height: 300px;
+    fill: none;
+    stroke: var(--text-heading);
+    stroke-width: 1.5;
+    margin-bottom: 40px;
+    opacity: 0.95;
+}
+
+.tank-title {
+    font-size: 42px;
+    margin-bottom: 8px;
+    letter-spacing: 12px;
+}
+
+.status-text {
+    font-size: 28px;
+    letter-spacing: 8px;
+    font-family: 'Rajdhani', sans-serif;
+    font-weight: 700;
+}
+
+.yolo-result-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: none;
+}
+
+.yolo-result-image.visible {
+    display: block;
+}
+
+.center-col .panel-3 {
+    height: 160px;
+}
+
+.system-log {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 14px;
+    color: var(--text-heading);
+    line-height: 2;
+    opacity: 0.75;
+}
+
+/* ========================================
+   RIGHT COLUMN
+   ======================================== */
+
+.right-col .panel-1 {
+    flex: 0.9;
+}
+
+.status-list {
+    list-style: none;
+    font-size: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.status-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.status-indicator {
+    width: 10px;
+    height: 10px;
+    background: var(--text-muted);
+    position: relative;
+}
+
+.status-indicator.active {
+    background: var(--text-heading);
+    box-shadow: 0 0 8px var(--text-heading);
+}
+
+.status-indicator.alert {
+    background: var(--alert-red);
+    box-shadow: 0 0 10px var(--alert-red);
+}
+
+.right-col .panel-2 {
+    flex: 1.1;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.right-col .panel-2:hover {
+    border-color: var(--text-heading);
+    box-shadow: inset 0 0 40px rgba(0, 169, 157, 0.25), 0 0 15px rgba(0, 169, 157, 0.15);
+}
+
+.right-col .panel-2::after {
+    content: '[CLICK INITIATED PROTOCOL]';
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    font-size: 11px;
+    color: var(--glow-color);
+    letter-spacing: 2px;
+    transition: color 0.2s ease;
+}
+
+.right-col .panel-2:hover::after {
+    color: var(--text-heading);
+}
+
+.right-col .panel-3 {
+    height: 180px;
+}
+
+/* ========================================
+   INTEL IMAGE UPLOAD PANEL
+   ======================================== */
+
+.upload-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.upload-area {
+    flex: 1;
+    border: 1px dashed var(--border-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    background: rgba(0, 169, 157, 0.03);
+}
+
+.upload-area:hover {
+    border-color: var(--text-heading);
+    box-shadow: 0 0 15px rgba(0, 169, 157, 0.2), inset 0 0 15px rgba(0, 169, 157, 0.08);
+}
+
+.upload-area.dragover {
+    border-color: var(--ready-green);
+    box-shadow: 0 0 20px rgba(57, 255, 106, 0.15), inset 0 0 20px rgba(57, 255, 106, 0.05);
+}
+
+.upload-icon {
+    width: 40px;
+    height: 40px;
+    stroke: var(--text-muted);
+    fill: none;
+    margin-bottom: 10px;
+    opacity: 0.6;
+}
+
+.upload-text {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-align: center;
+    line-height: 1.8;
+}
+
+.upload-text span {
+    color: var(--text-heading);
+    cursor: pointer;
+}
+
+.upload-input {
+    display: none;
+}
+
+.upload-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 8px;
+    display: none;
+}
+
+.upload-preview.visible {
+    display: block;
+}
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.upload-placeholder.hidden {
+    display: none;
+}
+
+.upload-status {
+    font-size: 11px;
+    color: var(--ready-green);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 8px;
+    height: 16px;
+}
