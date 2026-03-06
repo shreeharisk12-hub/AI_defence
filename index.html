@@ -31,13 +31,13 @@
             --bg-primary: #0a0a0a;
             --bg-secondary: #111111;
             --bg-card: #141414;
-            --accent-gold: #c8a84e;
-            --accent-gold-dim: rgba(200, 168, 78, 0.25);
+            --accent-gold: #ffcc00;
+            --accent-gold-dim: rgba(255, 204, 0, 0.25);
             --accent-cyan: #00e5ff;
             --accent-cyan-dim: rgba(0, 229, 255, 0.12);
             --text-primary: #f0ece4;
-            --text-secondary: #9a9486;
-            --text-dim: #5c5647;
+            --text-secondary: #c9c5b8;
+            --text-dim: #827e72;
             --font-logo: 'Black Ops One', 'Impact', sans-serif;
             --font-heading: 'Rajdhani', sans-serif;
             --font-body: 'Inter', 'Segoe UI', sans-serif;
@@ -82,7 +82,7 @@
             background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border-bottom: 1px solid rgba(200, 168, 78, 0.12);
+            border-bottom: 1px solid rgba(255, 204, 0, 0.12);
             transition: background 0.3s;
         }
 
@@ -119,6 +119,7 @@
         .nav-links a.active {
             color: var(--accent-gold);
             border-bottom-color: var(--accent-gold);
+            text-shadow: 0 0 12px rgba(255, 204, 0, 0.6);
         }
 
         /* Mobile hamburger */
@@ -158,23 +159,17 @@
             z-index: 0;
         }
 
-        .hero-slide {
+        .hero-video {
             position: absolute;
             inset: 0;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0;
-            transition: opacity 1.6s ease-in-out;
-            transform: scale(1.05);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
         }
 
-        .hero-slide.active {
-            opacity: 1;
-        }
-
-        /* Dark gradient overlay on every slide */
-        .hero-slide::before {
+        /* Dark gradient overlay on the video */
+        .hero-carousel::before {
             content: '';
             position: absolute;
             inset: 0;
@@ -187,7 +182,7 @@
         }
 
         /* Scanline texture */
-        .hero-slide::after {
+        .hero-carousel::after {
             content: '';
             position: absolute;
             inset: 0;
@@ -200,36 +195,6 @@
             z-index: 2;
         }
 
-        /* Slide indicator dots */
-        .carousel-dots {
-            position: absolute;
-            bottom: 32px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10;
-            display: flex;
-            gap: 12px;
-        }
-
-        .carousel-dot {
-            width: 10px;
-            height: 10px;
-            border: 1px solid var(--accent-gold-dim);
-            background: transparent;
-            cursor: pointer;
-            transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .carousel-dot.active {
-            background: var(--accent-gold);
-            border-color: var(--accent-gold);
-            box-shadow: 0 0 8px rgba(200, 168, 78, 0.4);
-        }
-
-        .carousel-dot:hover {
-            border-color: var(--accent-gold);
-        }
-
         .hero-content {
             position: relative;
             z-index: 2;
@@ -238,41 +203,7 @@
             padding: 0 24px;
         }
 
-        /* Chevron arrows — decorative */
-        .hero-chevron {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 3;
-            width: 40px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0.35;
-            transition: opacity 0.3s;
-        }
 
-        .hero-chevron:hover {
-            opacity: 0.8;
-        }
-
-        .hero-chevron.left {
-            left: 40px;
-        }
-
-        .hero-chevron.right {
-            right: 40px;
-        }
-
-        .hero-chevron svg {
-            width: 28px;
-            height: 28px;
-            stroke: var(--text-primary);
-            stroke-width: 2;
-            fill: none;
-        }
 
         .hero-title {
             font-family: var(--font-heading);
@@ -318,7 +249,7 @@
         .cta-btn:hover {
             color: var(--bg-primary);
             background: var(--accent-gold);
-            box-shadow: 0 0 30px rgba(200, 168, 78, 0.35), 0 0 60px rgba(200, 168, 78, 0.12);
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.35), 0 0 60px rgba(255, 204, 0, 0.12);
         }
 
         /* Shimmer sweep on hover */
@@ -350,7 +281,7 @@
             position: absolute;
             width: 16px;
             height: 16px;
-            border-color: rgba(200, 168, 78, 0.35);
+            border-color: rgba(255, 204, 0, 0.35);
             border-style: solid;
             transition: border-color 0.3s;
         }
@@ -377,8 +308,8 @@
            ============================================= */
         .features {
             background: var(--bg-secondary);
-            padding: 100px 24px;
-            border-top: 1px solid rgba(200, 168, 78, 0.08);
+            padding: 140px 24px;
+            border-top: 1px solid rgba(255, 204, 0, 0.08);
         }
 
         .features-grid {
@@ -405,7 +336,7 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 28px;
-            background: radial-gradient(circle at center, rgba(200, 168, 78, 0.06) 0%, transparent 70%);
+            background: radial-gradient(circle at center, rgba(255, 204, 0, 0.06) 0%, transparent 70%);
             transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
             position: relative;
         }
@@ -415,18 +346,18 @@
             position: absolute;
             inset: -6px;
             border-radius: 50%;
-            border: 1px solid rgba(200, 168, 78, 0.08);
+            border: 1px solid rgba(255, 204, 0, 0.08);
             transition: border-color 0.35s;
         }
 
         .feature-item:hover .feature-circle {
-            box-shadow: 0 0 25px rgba(200, 168, 78, 0.25), inset 0 0 20px rgba(200, 168, 78, 0.06);
-            border-color: #ddc06a;
+            box-shadow: 0 0 25px rgba(255, 204, 0, 0.25), inset 0 0 20px rgba(255, 204, 0, 0.06);
+            border-color: #ffcc00;
             transform: translateY(-4px);
         }
 
         .feature-item:hover .feature-circle::before {
-            border-color: rgba(200, 168, 78, 0.2);
+            border-color: rgba(255, 204, 0, 0.2);
         }
 
         .feature-circle svg {
@@ -459,8 +390,8 @@
            ============================================= */
         .tech-stack {
             background: #0d0d0d;
-            padding: 100px 24px;
-            border-top: 1px solid rgba(200, 168, 78, 0.06);
+            padding: 140px 24px;
+            border-top: 1px solid rgba(255, 204, 0, 0.06);
         }
 
         .tech-stack-inner {
@@ -497,7 +428,7 @@
 
         .tech-card {
             background: var(--bg-card);
-            border: 1px solid rgba(200, 168, 78, 0.1);
+            border: 1px solid rgba(255, 204, 0, 0.1);
             padding: 32px 16px;
             display: flex;
             flex-direction: column;
@@ -521,8 +452,8 @@
         }
 
         .tech-card:hover {
-            border-color: rgba(200, 168, 78, 0.3);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(200, 168, 78, 0.06);
+            border-color: rgba(255, 204, 0, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 20px rgba(255, 204, 0, 0.06);
             transform: translateY(-4px);
         }
 
@@ -579,13 +510,56 @@
             transform: translateY(-4px);
         }
 
+
+        /* =============================================
+           CONTACT SECTION
+           ============================================= */
+        .contact-section {
+            background: var(--bg-primary);
+            padding: 140px 24px;
+            border-top: 1px solid rgba(255, 204, 0, 0.08);
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 204, 0, 0.2);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            font-size: 15px;
+            border-radius: 4px;
+            transition: border-color 0.35s, box-shadow 0.35s;
+        }
+
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 15px rgba(255, 204, 0, 0.25);
+        }
+
+        .contact-form textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
         /* =============================================
            FOOTER
            ============================================= */
         .footer {
             background: var(--bg-primary);
             padding: 32px 48px;
-            border-top: 1px solid rgba(200, 168, 78, 0.08);
+            border-top: 1px solid rgba(255, 204, 0, 0.08);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -633,7 +607,7 @@
                 flex-direction: column;
                 padding: 100px 32px 40px;
                 gap: 0;
-                border-left: 1px solid rgba(200, 168, 78, 0.15);
+                border-left: 1px solid rgba(255, 204, 0, 0.15);
                 transition: right 0.35s ease;
             }
 
@@ -644,7 +618,7 @@
             .nav-links a {
                 padding: 14px 0;
                 font-size: 15px;
-                border-bottom: 1px solid rgba(200, 168, 78, 0.06);
+                border-bottom: 1px solid rgba(255, 204, 0, 0.06);
             }
 
             .nav-toggle {
@@ -664,10 +638,6 @@
 
             .tech-card {
                 padding: 24px 12px;
-            }
-
-            .hero-chevron {
-                display: none;
             }
 
             .cta-btn {
@@ -729,11 +699,11 @@
     <nav class="navbar" id="navbar">
         <div class="navbar-logo">MILITARY <span>AI</span></div>
         <ul class="nav-links" id="navLinks">
-            <li><a href="#" class="active">Home</a></li>
-            <li><a href="#features">Technology (YOLOv8)</a></li>
-            <li><a href="#features">Operations</a></li>
-            <li><a href="#features">Intelligence</a></li>
-            <li><a href="#features">Cloud Sync (AWS)</a></li>
+            <li><a href="#hero" class="active">Home</a></li>
+            <li><a href="#techstack">Technology</a></li>
+            <li><a href="#operations">Operations</a></li>
+            <li><a href="#intelligence">Intelligence</a></li>
+            <li><a href="#cloud-sync">Cloud Sync (AWS)</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
         <div class="nav-toggle" id="navToggle" onclick="document.getElementById('navLinks').classList.toggle('open')">
@@ -745,24 +715,9 @@
 
     <!-- ========== HERO ========== -->
     <section class="hero" id="hero">
-        <!-- Carousel backgrounds -->
+        <!-- Video background -->
         <div class="hero-carousel" id="heroCarousel">
-            <div class="hero-slide active" style="background-image: url('hero-bg.png')"></div>
-            <div class="hero-slide" style="background-image: url('hero-tank.png')"></div>
-            <div class="hero-slide" style="background-image: url('hero-drone.png')"></div>
-            <div class="hero-slide" style="background-image: url('hero-naval.png')"></div>
-        </div>
-
-        <!-- Decorative chevrons -->
-        <div class="hero-chevron left">
-            <svg viewBox="0 0 24 24">
-                <polyline points="15 18 9 12 15 6" />
-            </svg>
-        </div>
-        <div class="hero-chevron right">
-            <svg viewBox="0 0 24 24">
-                <polyline points="9 18 15 12 9 6" />
-            </svg>
+            <video class="hero-video" src="video.mp4" autoplay loop muted playsinline></video>
         </div>
 
         <div class="hero-content">
@@ -775,25 +730,16 @@
                 <a href="dashboard.html" class="cta-btn" id="ctaBtn">ENTER COMMAND DASHBOARD</a>
             </div>
         </div>
-
-        <!-- Carousel indicator dots -->
-        <div class="carousel-dots" id="carouselDots">
-            <div class="carousel-dot active" data-index="0"></div>
-            <div class="carousel-dot" data-index="1"></div>
-            <div class="carousel-dot" data-index="2"></div>
-            <div class="carousel-dot" data-index="3"></div>
-        </div>
     </section>
 
-    <!-- ========== FEATURES ========== -->
-    <section class="features" id="features">
-        <div class="features-grid">
-
-            <!-- 1 — Detection -->
+    <!-- ========== OPERATIONS ========== -->
+    <section class="features" id="operations">
+        <div class="section-title" style="margin-bottom: 8px;">Field Operations</div>
+        <div class="section-subtitle" style="margin-bottom: 48px;">Battlefield Deployment</div>
+        <div class="features-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 1000px;">
             <div class="feature-item">
                 <div class="feature-circle">
                     <svg viewBox="0 0 48 48">
-                        <!-- Crosshair / radar icon -->
                         <circle cx="24" cy="24" r="18" />
                         <circle cx="24" cy="24" r="10" />
                         <circle cx="24" cy="24" r="3" fill="currentColor" stroke="none" />
@@ -803,66 +749,126 @@
                         <line x1="34" y1="24" x2="46" y2="24" />
                     </svg>
                 </div>
-                <div class="feature-label">Detection</div>
-                <p class="feature-desc">YOLO-driven identification of tanks and aircraft.</p>
+                <div class="feature-label">Real-Time Detection</div>
+                <p class="feature-desc">Active scanning and identification of tanks, armored vehicles, and aircraft on
+                    the battlefield.</p>
             </div>
-
-            <!-- 2 — AWS Sync -->
             <div class="feature-item">
                 <div class="feature-circle">
                     <svg viewBox="0 0 48 48">
-                        <!-- Cloud upload icon -->
-                        <path d="M34 36H14a10 10 0 0 1-1-19.9A12 12 0 0 1 36 20a8 8 0 0 1-2 16z" />
-                        <polyline points="20 28 24 24 28 28" />
-                        <line x1="24" y1="24" x2="24" y2="36" />
-                    </svg>
-                </div>
-                <div class="feature-label">AWS Sync</div>
-                <p class="feature-desc">Global intelligence sharing via secure cloud integration.</p>
-            </div>
-
-            <!-- 3 — Real-Time -->
-            <div class="feature-item">
-                <div class="feature-circle">
-                    <svg viewBox="0 0 48 48">
-                        <!-- Clock / speed icon -->
-                        <circle cx="24" cy="24" r="20" />
-                        <polyline points="24 12 24 24 32 28" />
-                        <path d="M38 8 l4-4" />
-                        <path d="M10 8 l-4-4" />
-                    </svg>
-                </div>
-                <div class="feature-label">Real-Time</div>
-                <p class="feature-desc">Sub-millisecond analysis for immediate tactical response.</p>
-            </div>
-
-            <!-- 4 — Precision -->
-            <div class="feature-item">
-                <div class="feature-circle">
-                    <svg viewBox="0 0 48 48">
-                        <!-- Bullseye / target icon -->
                         <circle cx="24" cy="24" r="20" />
                         <circle cx="24" cy="24" r="14" />
                         <circle cx="24" cy="24" r="8" />
                         <circle cx="24" cy="24" r="3" fill="currentColor" stroke="none" />
                     </svg>
                 </div>
-                <div class="feature-label">Precision</div>
-                <p class="feature-desc">High-confidence threat assessment in varied terrains.</p>
+                <div class="feature-label">Threat Classification</div>
+                <p class="feature-desc">Automated categorization of detected units based on threat level and vehicle
+                    type.</p>
             </div>
+            <div class="feature-item">
+                <div class="feature-circle">
+                    <svg viewBox="0 0 40 40">
+                        <polyline points="14,8 4,20 14,32" />
+                        <polyline points="26,8 36,20 26,32" />
+                        <line x1="23" y1="6" x2="17" y2="34" />
+                    </svg>
+                </div>
+                <div class="feature-label">Tactical Dashboard</div>
+                <p class="feature-desc">A centralized command interface providing field commanders with immediate visual
+                    intelligence.</p>
+            </div>
+        </div>
+    </section>
 
+    <!-- ========== INTELLIGENCE ========== -->
+    <section class="features" id="intelligence" style="background: var(--bg-primary);">
+        <div class="section-title" style="margin-bottom: 8px;">Strategic Intelligence</div>
+        <div class="section-subtitle" style="margin-bottom: 48px;">Data Processing & Analysis</div>
+        <div class="features-grid" style="grid-template-columns: repeat(3, 1fr); max-width: 1000px;">
+            <div class="feature-item">
+                <div class="feature-circle">
+                    <svg viewBox="0 0 40 40">
+                        <rect x="8" y="8" width="24" height="24" rx="3" />
+                        <line x1="14" y1="8" x2="14" y2="2" />
+                        <line x1="20" y1="8" x2="20" y2="2" />
+                        <line x1="26" y1="8" x2="26" y2="2" />
+                        <line x1="14" y1="32" x2="14" y2="38" />
+                        <line x1="20" y1="32" x2="20" y2="38" />
+                        <line x1="26" y1="32" x2="26" y2="38" />
+                        <line x1="8" y1="14" x2="2" y2="14" />
+                        <line x1="8" y1="20" x2="2" y2="20" />
+                        <line x1="8" y1="26" x2="2" y2="26" />
+                        <line x1="32" y1="14" x2="38" y2="14" />
+                        <line x1="32" y1="20" x2="38" y2="20" />
+                        <line x1="32" y1="26" x2="38" y2="26" />
+                        <circle cx="20" cy="20" r="5" />
+                    </svg>
+                </div>
+                <div class="feature-label">Processing</div>
+                <p class="feature-desc">Detected objects are stripped of noise and processed for high-fidelity
+                    identification.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-circle">
+                    <svg viewBox="0 0 40 40">
+                        <rect x="6" y="4" width="28" height="10" rx="2" />
+                        <rect x="6" y="16" width="28" height="10" rx="2" />
+                        <rect x="6" y="28" width="28" height="10" rx="2" />
+                        <line x1="10" y1="9" x2="18" y2="9" />
+                        <line x1="10" y1="21" x2="18" y2="21" />
+                        <line x1="10" y1="33" x2="18" y2="33" />
+                    </svg>
+                </div>
+                <div class="feature-label">Secure Logging</div>
+                <p class="feature-desc">Every detection event is timestamped, geopolocated, and logged into secure
+                    military databases.</p>
+            </div>
+            <div class="feature-item">
+                <div class="feature-circle">
+                    <svg viewBox="0 0 48 48">
+                        <circle cx="24" cy="24" r="20" />
+                        <polyline points="24 12 24 24 32 28" />
+                    </svg>
+                </div>
+                <div class="feature-label">Strategic Insights</div>
+                <p class="feature-desc">Aggregated data uncovers enemy movement patterns for active threat analysis and
+                    proactive responses.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ========== CLOUD SYNC ========== -->
+    <section class="features" id="cloud-sync">
+        <div class="section-title" style="margin-bottom: 8px;">Cloud Integration</div>
+        <div class="section-subtitle" style="margin-bottom: 48px;">AWS Distributed Architecture</div>
+        <div class="features-grid" style="grid-template-columns: repeat(1, 1fr); max-width: 650px; text-align: center;">
+            <div class="feature-item">
+                <div class="feature-circle" style="width: 160px; height: 160px; margin: 0 auto 32px;">
+                    <svg viewBox="0 0 48 48" style="width: 60px; height: 60px;">
+                        <path d="M34 36H14a10 10 0 0 1-1-19.9A12 12 0 0 1 36 20a8 8 0 0 1-2 16z" />
+                        <polyline points="20 28 24 24 28 28" />
+                        <line x1="24" y1="24" x2="24" y2="36" />
+                    </svg>
+                </div>
+                <div class="feature-label">Global Intelligence Sharing</div>
+                <p class="feature-desc" style="max-width: 100%; font-size: 15px;">Detection results are immediately
+                    uploaded to remote AWS Command storage. By utilizing Edge-to-Cloud synchronization, field units
+                    operate entirely in sync with overhead command networks, guaranteeing highly available analysis
+                    across the globe.</p>
+            </div>
         </div>
     </section>
 
     <!-- ========== TECH STACK ========== -->
     <section class="tech-stack" id="techstack">
         <div class="tech-stack-inner">
-            <div class="section-title">Powered By</div>
-            <div class="section-subtitle">Engineering & Infrastructure</div>
+            <div class="section-title">Technology Stack</div>
+            <div class="section-subtitle">The AI Pipeline & Implementation</div>
 
             <div class="tech-grid">
 
-                <!-- 1 — YOLOv8 -->
+                <!-- 1 — YOLOv11n -->
                 <div class="tech-card">
                     <div class="tech-icon">
                         <svg viewBox="0 0 40 40">
@@ -883,8 +889,9 @@
                             <circle cx="20" cy="20" r="5" />
                         </svg>
                     </div>
-                    <div class="tech-label">YOLOv8</div>
-                    <div class="tech-sublabel">Real-time Object Detection</div>
+                    <div class="tech-label">YOLOv11n</div>
+                    <div class="tech-sublabel">Real-time object detection model fine-tuned using a custom annotated
+                        dataset to detect military vehicles and aircraft.</div>
                 </div>
 
                 <!-- 2 — PyTorch -->
@@ -899,7 +906,7 @@
                         </svg>
                     </div>
                     <div class="tech-label">PyTorch</div>
-                    <div class="tech-sublabel">Deep Learning Training</div>
+                    <div class="tech-sublabel">Used for training and optimizing the deep learning model.</div>
                 </div>
 
                 <!-- 3 — Python / C++ -->
@@ -919,7 +926,7 @@
                         </svg>
                     </div>
                     <div class="tech-label">Python / C++</div>
-                    <div class="tech-sublabel">Low-Latency Inference API</div>
+                    <div class="tech-sublabel">Used for inference pipelines and system integration.</div>
                 </div>
 
                 <!-- 4 — AWS S3 -->
@@ -933,7 +940,7 @@
                         </svg>
                     </div>
                     <div class="tech-label">AWS S3</div>
-                    <div class="tech-sublabel">Scalable Intel Repository</div>
+                    <div class="tech-sublabel">Storage for training datasets and intelligence images.</div>
                 </div>
 
                 <!-- 5 — AWS Lambda -->
@@ -945,7 +952,7 @@
                         </svg>
                     </div>
                     <div class="tech-label">AWS Lambda</div>
-                    <div class="tech-sublabel">Event-Driven Data Sync</div>
+                    <div class="tech-sublabel">Event-driven processing and cloud automation.</div>
                 </div>
 
                 <!-- 6 — HTML5 / JS -->
@@ -958,79 +965,36 @@
                             <line x1="23" y1="6" x2="17" y2="34" />
                         </svg>
                     </div>
-                    <div class="tech-label">HTML5 / JS</div>
-                    <div class="tech-sublabel">Tactical Dashboard UI</div>
+                    <div class="tech-label">HTML5 / JavaScript</div>
+                    <div class="tech-sublabel">Frontend command dashboard creation.</div>
                 </div>
 
             </div>
         </div>
     </section>
 
+    <!-- ========== CONTACT ========== -->
+    <section class="contact-section" id="contact">
+        <div class="section-title">Secure Comms</div>
+        <div class="section-subtitle">Establish Contact</div>
+        <form class="contact-form" action="#" method="POST"
+            onsubmit="event.preventDefault(); alert('Transmission Sent Securely.'); this.reset();">
+            <input type="text" name="name" placeholder="Agent Name / Call Sign" required>
+            <input type="email" name="email" placeholder="Encrypted Email Link" required>
+            <textarea name="message" placeholder="Transmission Message..." required></textarea>
+            <button type="submit" class="cta-btn"
+                style="border-width: 1px; padding: 12px 32px; font-size: 13px;">TRANSMIT</button>
+        </form>
+    </section>
+
     <!-- ========== FOOTER ========== -->
-    <footer class="footer" id="contact">
+    <footer class="footer">
         <div class="footer-logo">MILITARY AI</div>
         <div>&copy; 2026 Military AI — Classified Operations Division</div>
     </footer>
 
     <!-- ========== JS ========== -->
     <script>
-        // ============ HERO CAROUSEL ============
-        (function () {
-            var slides = document.querySelectorAll('.hero-slide');
-            var dots = document.querySelectorAll('.carousel-dot');
-            var current = 0;
-            var total = slides.length;
-            var interval = 5000; // 5 seconds
-            var timer;
-
-            function goTo(index) {
-                slides[current].classList.remove('active');
-                dots[current].classList.remove('active');
-                current = (index + total) % total;
-                slides[current].classList.add('active');
-                dots[current].classList.add('active');
-            }
-
-            function next() {
-                goTo(current + 1);
-            }
-
-            function startAutoplay() {
-                timer = setInterval(next, interval);
-            }
-
-            function resetAutoplay() {
-                clearInterval(timer);
-                startAutoplay();
-            }
-
-            // Dot clicks
-            dots.forEach(function (dot) {
-                dot.addEventListener('click', function () {
-                    goTo(parseInt(this.getAttribute('data-index'), 10));
-                    resetAutoplay();
-                });
-            });
-
-            // Chevron clicks
-            var leftChev = document.querySelector('.hero-chevron.left');
-            var rightChev = document.querySelector('.hero-chevron.right');
-            if (leftChev) {
-                leftChev.addEventListener('click', function () {
-                    goTo(current - 1);
-                    resetAutoplay();
-                });
-            }
-            if (rightChev) {
-                rightChev.addEventListener('click', function () {
-                    goTo(current + 1);
-                    resetAutoplay();
-                });
-            }
-
-            startAutoplay();
-        })();
-
         // ============ SCROLL REVEAL ============
         (function () {
             var items = document.querySelectorAll('.feature-item, .tech-card');
