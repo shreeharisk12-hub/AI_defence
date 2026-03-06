@@ -221,11 +221,26 @@
         }
 
         .hero-subtitle {
-            font-size: clamp(14px, 1.8vw, 18px);
-            color: var(--text-secondary);
-            max-width: 640px;
-            margin: 0 auto 40px;
-            line-height: 1.7;
+            font-size: clamp(13px, 1.6vw, 16px);
+            color: rgba(200, 210, 220, 0.85);
+            font-weight: 400;
+            max-width: 700px;
+            margin: 0 auto 48px;
+            line-height: 2;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 0, 0, 0.5);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+        }
+
+        .hero-subtitle .line-gap {
+            display: block;
+            height: 10px;
+        }
+
+        .hero-subtitle strong {
+            color: var(--accent-gold);
+            font-weight: 600;
+            text-shadow: 0 0 12px rgba(255, 204, 0, 0.4);
         }
 
         /* CTA Button */
@@ -244,12 +259,26 @@
             position: relative;
             overflow: hidden;
             transition: color 0.35s ease, background 0.35s ease, box-shadow 0.35s ease;
+            animation: cta-glow-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes cta-glow-pulse {
+
+            0%,
+            100% {
+                box-shadow: 0 0 8px rgba(255, 204, 0, 0.1), 0 0 20px rgba(255, 204, 0, 0.05);
+            }
+
+            50% {
+                box-shadow: 0 0 16px rgba(255, 204, 0, 0.25), 0 0 40px rgba(255, 204, 0, 0.1);
+            }
         }
 
         .cta-btn:hover {
             color: var(--bg-primary);
             background: var(--accent-gold);
-            box-shadow: 0 0 30px rgba(255, 204, 0, 0.35), 0 0 60px rgba(255, 204, 0, 0.12);
+            box-shadow: 0 0 30px rgba(255, 204, 0, 0.45), 0 0 60px rgba(255, 204, 0, 0.2);
+            animation: none;
         }
 
         /* Shimmer sweep on hover */
@@ -308,7 +337,7 @@
            ============================================= */
         .features {
             background: var(--bg-secondary);
-            padding: 140px 24px;
+            padding: 160px 24px;
             border-top: 1px solid rgba(255, 204, 0, 0.08);
         }
 
@@ -390,7 +419,7 @@
            ============================================= */
         .tech-stack {
             background: #0d0d0d;
-            padding: 140px 24px;
+            padding: 160px 24px;
             border-top: 1px solid rgba(255, 204, 0, 0.06);
         }
 
@@ -516,7 +545,7 @@
            ============================================= */
         .contact-section {
             background: var(--bg-primary);
-            padding: 140px 24px;
+            padding: 160px 24px;
             border-top: 1px solid rgba(255, 204, 0, 0.08);
         }
 
@@ -700,10 +729,10 @@
         <div class="navbar-logo">MILITARY <span>AI</span></div>
         <ul class="nav-links" id="navLinks">
             <li><a href="#hero" class="active">Home</a></li>
-            <li><a href="#techstack">Technology</a></li>
             <li><a href="#operations">Operations</a></li>
             <li><a href="#intelligence">Intelligence</a></li>
             <li><a href="#cloud-sync">Cloud Sync (AWS)</a></li>
+            <li><a href="#techstack">Technology</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
         <div class="nav-toggle" id="navToggle" onclick="document.getElementById('navLinks').classList.toggle('open')">
@@ -724,7 +753,8 @@
             <h1 class="hero-title">Securing the Future with <em>AI-Powered</em> Intelligence</h1>
             <p class="hero-subtitle">
                 Real-time threat detection and classification for the modern battlefield.
-                Powered by YOLO and AWS Cloud Infrastructure.
+                <span class="line-gap"></span>
+                Powered by <strong>YOLO</strong> and <strong>AWS Cloud Infrastructure</strong>.
             </p>
             <div class="cta-wrapper">
                 <a href="dashboard.html" class="cta-btn" id="ctaBtn">ENTER COMMAND DASHBOARD</a>
@@ -1016,7 +1046,7 @@
             }
         })();
 
-        // ============ NAVBAR SCROLL ============
+        // ============ NAVBAR SCROLL (background opacity) ============
         (function () {
             var navbar = document.getElementById('navbar');
             window.addEventListener('scroll', function () {
@@ -1025,6 +1055,60 @@
                 } else {
                     navbar.style.background = 'rgba(10,10,10,0.85)';
                 }
+            });
+        })();
+
+        // ============ NAVBAR SCROLLSPY ============
+        (function () {
+            var navLinks = document.querySelectorAll('.nav-links a');
+            var sections = [];
+
+            // Build section map from nav link hrefs
+            navLinks.forEach(function (link) {
+                var href = link.getAttribute('href');
+                if (href && href.startsWith('#')) {
+                    var section = document.getElementById(href.substring(1));
+                    if (section) {
+                        sections.push({ el: section, link: link });
+                    }
+                }
+            });
+
+            function updateActiveLink() {
+                var scrollY = window.scrollY + 150; // offset for navbar height + buffer
+                var activeIndex = 0;
+
+                for (var i = sections.length - 1; i >= 0; i--) {
+                    if (scrollY >= sections[i].el.offsetTop) {
+                        activeIndex = i;
+                        break;
+                    }
+                }
+
+                navLinks.forEach(function (link) {
+                    link.classList.remove('active');
+                });
+                sections[activeIndex].link.classList.add('active');
+            }
+
+            window.addEventListener('scroll', updateActiveLink);
+            updateActiveLink(); // set initial state
+
+            // Smooth scroll on click with offset for fixed navbar
+            navLinks.forEach(function (link) {
+                link.addEventListener('click', function (e) {
+                    var href = this.getAttribute('href');
+                    if (href && href.startsWith('#')) {
+                        e.preventDefault();
+                        var target = document.getElementById(href.substring(1));
+                        if (target) {
+                            var offsetTop = target.offsetTop - 72; // navbar height
+                            window.scrollTo({ top: offsetTop, behavior: 'smooth' });
+                        }
+                        // Close mobile menu if open
+                        document.getElementById('navLinks').classList.remove('open');
+                    }
+                });
             });
         })();
     </script>
